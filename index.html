@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinSim Pro</title>
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+
+    <!-- ════════════════════════════════════════
+         SPLASH SCREEN — CINEMATIC AURORA LOADING
+         ════════════════════════════════════════ -->
+    <div id="splashScreen">
+        <!-- Ambient glow blobs -->
+        <div class="splash-glow-a"></div>
+        <div class="splash-glow-b"></div>
+
+        <!-- Pulsing aurora rings -->
+        <div class="splash-rings">
+            <div class="splash-ring"></div>
+            <div class="splash-ring"></div>
+            <div class="splash-ring"></div>
+            <div class="splash-ring"></div>
+        </div>
+
+        <!-- Ayam + coin -->
+        <div class="animation-container">
+            <img src="ayam.png" alt="Celengan Ayam" class="loading-ayam">
+            <span class="loading-coin">🪙</span>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="splash-progress-wrap">
+            <div class="splash-progress-bar"></div>
+        </div>
+
+        <!-- Label -->
+        <div class="splash-text">Menyiapkan FinSim Pro…</div>
+    </div>
+
+
+    <!-- ════════ FIXED HEADER ════════ -->
+    <div class="app-header">
+        <h2>💰 FinSim Pro</h2>
+        <p>Manajemen Keuangan Pintar</p>
+    </div>
+
+    <div class="main-content-wrapper">
+
+        <!-- ════════ MENU UTAMA ════════ -->
+        <div id="pageMenuUtama" class="app-page">
+            <div class="welcome-text">
+                <h3>Asisten Finansial Anda</h3>
+                <p>Pilih menu di bawah untuk mulai mengelola keuanganmu:</p>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-card" onclick="pindahHalaman('pageAlokasi')">
+                    <div class="menu-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    </div>
+                    <h4>Alokasi Uang</h4>
+                    <p>Bagi pendapatan otomatis</p>
+                </div>
+
+                <div class="menu-card" onclick="pindahHalaman('pageCelengan')">
+                    <div class="menu-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                    </div>
+                    <h4>Celengan Impian</h4>
+                    <p>Pantau target tabungan</p>
+                </div>
+
+                <div class="menu-card" onclick="pindahHalaman('pageTools')">
+                    <div class="menu-icon">
+                        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    </div>
+                    <div class="menu-text">
+                        <h4>Fitur &amp; Tools</h4>
+                        <p>Kalkulator Dana Darurat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ════════ HALAMAN ALOKASI ════════ -->
+        <div id="pageAlokasi" class="app-page hidden">
+            <button class="btn-back" id="backToMenu2">← Kembali ke Menu</button>
+
+            <div class="page-title-section">
+                <h3>📊 Alokasi Pendapatan</h3>
+                <p>Bagi uangmu secara otomatis dengan metode finansial.</p>
+            </div>
+
+            <div class="content-card">
+                <div class="section-title">1. Masukkan Pendapatan (Gaji / Hasil Jualan / Dll)</div>
+                <div class="input-group">
+                    <span class="currency">Rp</span>
+                    <input type="number" id="pendapatanInput" placeholder="Contoh: 5000000">
+                </div>
+                <small style="color: var(--text-sub); display: block; margin-top: 6px; font-size: 11px;">
+                    *Jika memasukkan uang lagi, saldo akan langsung ditambahkan ke kantong yang sudah ada!
+                </small>
+            </div>
+
+            <div class="content-card">
+                <div class="section-title">2. Atur Persentase Alokasi (Kustom)</div>
+                <div class="persen-inputs">
+                    <div class="persen-field">
+                        <label>Harian</label>
+                        <div class="input-flex"><input type="number" id="persenHarian" value="0"><span>%</span></div>
+                    </div>
+                    <div class="persen-field">
+                        <label>Tabungan</label>
+                        <div class="input-flex"><input type="number" id="persenTabungan" value="0"><span>%</span></div>
+                    </div>
+                    <div class="persen-field">
+                        <label>Investasi</label>
+                        <div class="input-flex"><input type="number" id="persenInvestasi" value="0"><span>%</span></div>
+                    </div>
+                </div>
+                <small id="errorPersenText" class="error-text hidden"></small>
+                <button id="hitungBtn" class="btn-primary">Bagi &amp; Tambah Uang Otomatis</button>
+            </div>
+
+            <div id="hasilSection" class="hidden">
+                <div class="content-card">
+                    <div style="text-align: center; margin-bottom: 10px; color: var(--text-sub); font-size: 13px;">
+                        Total Pendapatan Tergabung Bulan Ini: <strong id="txtTotalPendapatanGabungan" style="color: var(--text-main);">Rp 0</strong>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="financialChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="kantong-grid">
+                    <div class="kantong-box harian">
+                        <div class="kantong-header">
+                            <span class="kantong-icon">🍔</span>
+                            <h4>Kantong Harian (Sisa)</h4>
+                        </div>
+                        <p class="kantong-dana" id="txtHarian">Rp 0</p>
+                        <div class="kantong-footer">
+                            <input type="number" id="jajanHarianInput" placeholder="Estimasi Jajan/Hari">
+                            <div class="sub-info-box">
+                                <span>Sisa Akhir Bulan:</span>
+                                <strong id="txtSisaJajan">Rp 0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kantong-box tabungan">
+                        <div class="kantong-header">
+                            <span class="kantong-icon">🐷</span>
+                            <h4>Kantong Tabungan (Sisa)</h4>
+                        </div>
+                        <p class="kantong-dana" id="txtTabungan">Rp 0</p>
+                        <small style="color:var(--text-sub); font-size:11px; display:block; margin-top:8px; text-align:center;">
+                            💡 Setor langsung lewat menu <b>Celengan Impian</b>!
+                        </small>
+                    </div>
+
+                    <div class="kantong-box investasi full-width">
+                        <div class="kantong-header">
+                            <span class="kantong-icon">📈</span>
+                            <h4>Kantong Investasi</h4>
+                        </div>
+                        <p class="kantong-dana" id="txtInvestasi">Rp 0</p>
+                        <div class="proyeksi-box">
+                            <span>Proyeksi 5 Tahun ke Depan (Return 10%/Tahun):</span>
+                            <h5 id="txtSimulasiInvestasi">Rp 0</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card real-expense-section">
+                    <div class="section-title">📝 Catat Pengeluaran Riil Bulan Ini</div>
+                    <div class="flex-input-row">
+                        <input type="text" id="namaJajanInput" placeholder="Nama pengeluaran">
+                        <input type="number" id="hargaJajanInput" placeholder="Harga (Rp)">
+                        <button id="catatJajanBtn" class="btn-add">Catat</button>
+                    </div>
+                </div>
+
+                <div id="historySectionCard" class="content-card hidden">
+                    <div class="section-title">📋 Daftar Riwayat Pengeluaran</div>
+                    <ul id="jajanHistoryList" class="history-list"></ul>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ════════ HALAMAN CELENGAN (MULTI TARGET & SETOR LANGSUNG) ════════ -->
+        <div id="pageCelengan" class="app-page hidden">
+            <button class="btn-back" id="backToMenu3">← Kembali ke Menu</button>
+
+            <div class="page-title-section">
+                <h3>🎯 Celengan Impian (Multi-Target)</h3>
+                <p>Kumpulkan tabunganmu ke berbagai impian terpisah secara praktis.</p>
+            </div>
+            
+
+            <!-- Tampilan Ringkasan Saldo Tabungan yang Bisa Dipakai -->
+            <div class="content-card" style="background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05)); border-color: rgba(16,185,129,0.2);">
+                <div style="font-size: 13px; color: var(--text-sub);">Sisa Saldo Kantong Tabungan Saat Ini:</div>
+                <h3 id="txtSaldoTabunganCelenganPage" style="color: var(--green); margin: 4px 0 0 0; font-size: 22px;">Rp 0</h3>
+            </div>
+
+            <div class="content-card">
+                <div class="section-title">Pasang Target Impian Baru</div>
+                <div class="input-box-target">
+                    <input type="text" id="targetNamaInput" placeholder="Nama Impian (Contoh: Sepatu Baru)">
+                    <input type="number" id="targetHargaInput" placeholder="Target Harga (Contoh: 1000000)">
+                </div>
+                <button id="setTargetBtn" class="btn-primary" style="background:var(--grad-blue);box-shadow:0 4px 20px rgba(59,130,246,0.25);">Tambah Target Baru 🚀</button>
+            </div>
+
+            <!-- Container Tempat Daftar Banyak Celengan Muncul -->
+            <div id="daftarCelenganContainer"></div>
+        </div>
+
+
+        <!-- ════════ HALAMAN TOOLS ════════ -->
+        <div id="pageTools" class="app-page hidden">
+            <button class="btn-back" id="backToMenu4">← Kembali ke Menu</button>
+
+            <div class="page-title-section">
+                <h3>🛠️ Fitur &amp; Tools Pendukung</h3>
+                <p>Kalkulator finansial mandiri, manajemen data backup.</p>
+            </div>
+
+            <div class="content-card">
+                <div class="section-title">🛡️ Kalkulator Dana Darurat Ideal</div>
+                <label class="dd-label">Pengeluaran Pokok / Bulan</label>
+                <div class="input-group" style="margin-bottom:14px;">
+                    <span class="currency">Rp</span>
+                    <input type="number" id="ddPengeluaranInput" placeholder="Contoh: 3000000">
+                </div>
+                <label class="dd-label">Status Hubungan</label>
+                <select id="ddStatusSelect" class="dd-select">
+                    <option value="jomblo">Jomblo / Single (Minimal 6x Pengeluaran)</option>
+                    <option value="menikah">Menikah / Pasangan (Minimal 9x Pengeluaran)</option>
+                    <option value="anak">Sudah Punya Anak (Minimal 12x Pengeluaran)</option>
+                </select>
+                <div class="dd-result-box">
+                    <p>Minimal Target Dana Darurat Wajib Kamu <span id="txtBulanDanaDarurat">(6 Bulan)</span>:</p>
+                    <h4 id="txtDanaDaruratHasil">Rp 0</h4>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="section-title">💾 Backup &amp; Pemulihan Data JSON</div>
+                <button id="exportBtn" class="btn-primary" style="background:var(--grad-purple);box-shadow:0 4px 20px rgba(167,139,250,0.25);margin-bottom:16px;">Ekspor Data Aplikasi (.json)</button>
+                <label class="dd-label">Impor Data Cadangan:</label>
+                <input type="file" id="importFile" accept=".json" style="font-size:12px;width:100%;color:var(--text-sub);">
+            </div>
+
+            <div class="content-card" style="border-color:rgba(239,68,68,0.18);">
+                <div class="section-title" style="color:#ef4444;">🚨 Zona Bahaya</div>
+                <p style="font-size:12px;color:var(--text-sub);margin:0 0 14px;">Menghapus permanen seluruh data pendapatan, riwayat pengeluaran, dan celengan dari perangkat ini.</p>
+                <button id="resetDataBtn" class="btn-primary" style="background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 4px 20px rgba(239,68,68,0.22);">Reset Seluruh Data Aplikasi</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="app-watermark">Made with by Andika</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
