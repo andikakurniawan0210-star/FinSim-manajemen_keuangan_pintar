@@ -25,9 +25,11 @@ function pindahHalaman(idHalamanTujuan) {
     }
 }
 
+// Event listener tombol kembali ke menu utama
 document.getElementById('backToMenu2').addEventListener('click', () => pindahHalaman('pageMenuUtama'));
 document.getElementById('backToMenu3').addEventListener('click', () => pindahHalaman('pageMenuUtama'));
 document.getElementById('backToMenu4').addEventListener('click', () => pindahHalaman('pageMenuUtama'));
+document.getElementById('backToMenu5').addEventListener('click', () => pindahHalaman('pageMenuUtama'));
 
 
 // ==========================================================================
@@ -36,7 +38,7 @@ document.getElementById('backToMenu4').addEventListener('click', () => pindahHal
 let financialChart = null;
 let riwayatJajan  = JSON.parse(localStorage.getItem('riwayatJajan')) || [];
 
-// STRUKTUR BARU: Menggunakan Array untuk menampung banyak celengan sekaligus
+// STRUKTUR DATA: Menggunakan Array untuk menampung banyak celengan sekaligus
 let daftarCelengan = JSON.parse(localStorage.getItem('daftarCelengan')) || [];
 
 let savedHarian = localStorage.getItem('persenHarian') !== null ? Number(localStorage.getItem('persenHarian')) : 0;
@@ -201,9 +203,8 @@ document.getElementById('setTargetBtn').addEventListener('click', () => {
     const harga = Number(document.getElementById('targetHargaInput').value);
     if (!nama || harga <= 0) { alert("Masukkan data target yang valid!"); return; }
 
-    // Bikin objek impian baru
     const celenganBaru = {
-        id: Date.now(), // ID unik berbasis waktu
+        id: Date.now(), 
         nama: nama,
         harga: harga,
         terkumpul: 0
@@ -234,7 +235,6 @@ function renderDaftarCelengan() {
         let persen = Math.min((item.terkumpul / item.harga) * 100, 100);
         let sisaKurang = item.harga - item.terkumpul;
 
-        // Bikin element box card celengan
         const card = document.createElement('div');
         card.className = "content-card";
         
@@ -247,17 +247,15 @@ function renderDaftarCelengan() {
         } else {
             statusTextHTML = `<span>Kurang <b>${formatRupiah(sisaKurang)}</b> lagi</span>`;
             
-            // Jika tabungan kosong, kunci tombolnya
             if (sisaTabungan <= 0) {
                 buttonHTML = `<button class="btn-primary" style="background:#4b5563; border: 1px solid #374151; color:#ffffff !important; cursor:not-allowed;" disabled>❌ Saldo Tabungan Habis</button>`;
             } else {
-                // Dipasangi border 1px solid hitam transparan agar tegas
                 buttonHTML = `<button class="btn-primary" onclick="setorKeCelenganSpesifik(${item.id})" style="background:var(--grad-green); border: 1px solid rgba(0,0,0,0.25) !important; color:#000000 !important; font-weight:bold; box-shadow:0 4px 12px rgba(16,185,129,0.15);">Ambil dari Uang Tabungan</button>`;
             }
         }
 
         card.innerHTML = `
-            <div class="celengan-header-display" style="display:flex; justify-content:between; align-items:center; margin-bottom:12px;">
+            <div class="celengan-header-display" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                 <h4 style="margin:0;">🎯 <span>${item.nama}</span></h4>
                 <span class="badge-harga" style="background:rgba(59,130,246,0.1); color:var(--blue); padding:4px 8px; border-radius:6px; font-weight:bold; font-size:12px;">${formatRupiah(item.harga)}</span>
             </div>
@@ -278,36 +276,27 @@ function renderDaftarCelengan() {
     });
 }
 
-// LOGIKA SINKRONISASI INSTAN DI HALAMAN CELENGAN
 function setorKeCelenganSpesifik(idCelengan) {
     let sisaTabungan = localStorage.getItem('sisaBersihTabungan') !== null ? Number(localStorage.getItem('sisaBersihTabungan')) : 0;
     if (sisaTabungan <= 0) { alert("⚠️ Saldo Tabungan kamu kosong!"); return; }
 
-    // Cari celengan yang dicocokkan berdasarkan ID uniknya
     let indexCelengan = daftarCelengan.findIndex(item => item.id === idCelengan);
     if (indexCelengan === -1) return;
 
     let celengan = daftarCelengan[indexCelengan];
     let kekurangan = celengan.harga - celengan.terkumpul;
-
-    // Hitung dana yang ditarik (tidak boleh melebihi sisa tabungan atau sisa kekurangan celengan)
     let danaDisetor = Math.min(sisaTabungan, kekurangan);
 
-    // Eksekusi pemotongan saldo
     sisaTabungan -= danaDisetor;
     celengan.terkumpul += danaDisetor;
 
-    // Simpan ke memori HP
     localStorage.setItem('sisaBersihTabungan', sisaTabungan);
     localStorage.setItem('daftarCelengan', JSON.stringify(daftarCelengan));
 
     alert(`Berhasil memindahkan ${formatRupiah(danaDisetor)} langsung ke target "${celengan.nama}"!`);
 
-    // Update tampilan halaman secara real-time
     updateSaldoTabunganHeaderCelengan();
     renderDaftarCelengan();
-
-    // Jalankan sinkronisasi alokasi di background agar data halaman utama ikut ter-update
     restoreAlokasiData();
 }
 
@@ -321,7 +310,7 @@ function hapusCelengan(idCelengan) {
 
 
 // ==========================================================================
-// 4. HALAMAN TOOLS — DANA DARURAT & BACKUP
+// 4. PUSAT KALKULATOR — DANA DARURAT & GADGET MANUAL
 // ==========================================================================
 document.getElementById('ddPengeluaranInput').addEventListener('input',  hitungDanaDarurat);
 document.getElementById('ddStatusSelect').addEventListener('change', hitungDanaDarurat);
@@ -336,6 +325,39 @@ function hitungDanaDarurat() {
     document.getElementById('txtDanaDaruratHasil').textContent = formatRupiah(pengeluaran * pengali);
 }
 
+// LOGIKA KALKULATOR GADGET (MANUAL)
+const calcScreen = document.getElementById('calc-screen');
+
+function inputCalc(value) {
+    if (calcScreen.value === "Error") {
+        calcScreen.value = "";
+    }
+    calcScreen.value += value;
+}
+
+function clearCalc() {
+    calcScreen.value = "";
+}
+
+function calculateResult() {
+    try {
+        if (calcScreen.value.trim() === "") return;
+        // Melakukan evaluasi matematika secara aman dari string input layar
+        let result = eval(calcScreen.value);
+        
+        // Membatasi angka di belakang koma jika hasilnya desimal panjang
+        if (!Number.isInteger(result)) {
+            result = Math.round(result * 100) / 100;
+        }
+        calcScreen.value = result;
+    } catch (err) {
+        calcScreen.value = "Error";
+    }
+}
+
+// ==========================================================================
+// 5. HALAMAN TOOLS — MANAGEMENT DATA BACKUP & RESTORE
+// ==========================================================================
 document.getElementById('exportBtn').addEventListener('click', () => {
     const dataBackup = {
         riwayatJajan:  localStorage.getItem('riwayatJajan'),
@@ -356,6 +378,7 @@ document.getElementById('exportBtn').addEventListener('click', () => {
     URL.revokeObjectURL(url);
 });
 
+// FIX: Menutup block catch, try, function, dan event listener secara sempurna
 document.getElementById('importFile').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -372,26 +395,18 @@ document.getElementById('importFile').addEventListener('change', (e) => {
             if (data.sisaBersihHarian) localStorage.setItem('sisaBersihHarian', data.sisaBersihHarian);
             if (data.sisaBersihTabungan) localStorage.setItem('sisaBersihTabungan', data.sisaBersihTabungan);
 
-            alert("¼ Pemulihan sukses! Data cadangan berhasil dimuat ulang.");
+            alert("📂 Pemulihan sukses! Data cadangan berhasil dimuat ulang.");
             window.location.reload();
-        } catch (err) {
-            alert("X File JSON rusak atau format tidak cocok!");
+        } catch (error) {
+            alert("⚠️ Gagal membaca berkas cadangan. Pastikan format berkas JSON valid.");
         }
     };
     reader.readAsText(file);
 });
 
-document.getElementById('resetDataBtn').addEventListener('click', () => {
-    if (confirm("🚨 PERINGATAN!\n\nApakah kamu yakin ingin menghapus seluruh data secara permanen?")) {
-        localStorage.clear();
-        alert("Aplikasi berhasil di-reset ke kondisi awal.");
-        window.location.reload();
-    }
-});
 
-
-// =====================================================================
-// UTILITIES
+// ==========================================================================
+// UTILITIES — FORMATTING & GRAPHICS (BAGIAN AKHIR SCRIPT YANG SUDAH DIPERBAIKI)
 // ==========================================================================
 function formatRupiah(angka) {
     return "Rp " + Math.round(angka).toLocaleString('id-ID');
@@ -439,3 +454,21 @@ function renderChart(harian, tabungan, investasi) {
         }
     });
 }
+
+// ==========================================================================
+// LOGIKA RESET DATA KHUSUS ANDROID (TAMBAHAN BARU)
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const tombolReset = document.getElementById('resetDataBtn');
+    if (tombolReset) {
+        tombolReset.onclick = function() {
+            const yakin = confirm("⚠️ PERINGATAN! Apakah Anda yakin ingin menghapus SELURUH data keuangan, celengan, dan riwayat pengeluaran dari HP ini?");
+            if (yakin) {
+                // Menghapus seluruh data yang tersimpan di memori lokal browser HP
+                localStorage.clear(); 
+                alert("Semua data FinSim Pro berhasil direset ke kondisi pabrik!");
+                window.location.reload(); // Muat ulang halaman aplikasi
+            }
+        };
+    }
+});

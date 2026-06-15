@@ -9,15 +9,10 @@
 </head>
 <body>
 
-    <!-- ════════════════════════════════════════
-         SPLASH SCREEN — CINEMATIC AURORA LOADING
-         ════════════════════════════════════════ -->
     <div id="splashScreen">
-        <!-- Ambient glow blobs -->
         <div class="splash-glow-a"></div>
         <div class="splash-glow-b"></div>
 
-        <!-- Pulsing aurora rings -->
         <div class="splash-rings">
             <div class="splash-ring"></div>
             <div class="splash-ring"></div>
@@ -25,23 +20,19 @@
             <div class="splash-ring"></div>
         </div>
 
-        <!-- Ayam + coin -->
         <div class="animation-container">
             <img src="ayam.png" alt="Celengan Ayam" class="loading-ayam">
             <span class="loading-coin">🪙</span>
         </div>
 
-        <!-- Progress bar -->
         <div class="splash-progress-wrap">
             <div class="splash-progress-bar"></div>
         </div>
 
-        <!-- Label -->
         <div class="splash-text">Menyiapkan FinSim Pro…</div>
     </div>
 
 
-    <!-- ════════ FIXED HEADER ════════ -->
     <div class="app-header">
         <h2>💰 FinSim Pro</h2>
         <p>Manajemen Keuangan Pintar</p>
@@ -49,15 +40,15 @@
 
     <div class="main-content-wrapper">
 
-        <!-- ════════ MENU UTAMA ════════ -->
         <div id="pageMenuUtama" class="app-page">
             <div class="welcome-text">
                 <h3>Asisten Finansial Anda</h3>
                 <p>Pilih menu di bawah untuk mulai mengelola keuanganmu:</p>
             </div>
 
-            <div class="menu-grid">
-                <div class="menu-card" onclick="pindahHalaman('pageAlokasi')">
+            <div class="menu-grid" style="display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 15px !important; width: 100% !important; box-sizing: border-box !important;">
+                
+                <div class="menu-card" onclick="pindahHalaman('pageAlokasi')" style="width: 100% !important; grid-column: span 1 !important;">
                     <div class="menu-icon">
                         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                     </div>
@@ -65,7 +56,7 @@
                     <p>Bagi pendapatan otomatis</p>
                 </div>
 
-                <div class="menu-card" onclick="pindahHalaman('pageCelengan')">
+                <div class="menu-card" onclick="pindahHalaman('pageCelengan')" style="width: 100% !important; grid-column: span 1 !important;">
                     <div class="menu-icon">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
                     </div>
@@ -73,20 +64,26 @@
                     <p>Pantau target tabungan</p>
                 </div>
 
-                <div class="menu-card" onclick="pindahHalaman('pageTools')">
-                    <div class="menu-icon">
-                        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                <div class="menu-card" onclick="pindahHalaman('pageTools')" style="width: 100% !important; grid-column: span 1 !important; display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; justify-content: center !important;">
+                    <div class="menu-icon" style="margin: 0 auto 10px auto !important; display: flex !important; justify-content: center !important;">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
                     </div>
-                    <div class="menu-text">
-                        <h4>Fitur &amp; Tools</h4>
-                        <p>Kalkulator Dana Darurat</p>
-                    </div>
+                    <h4 style="margin: 0 !important; color: inherit !important;">Manajemen Data</h4>
+                    <p style="margin: 4px 0 0 0 !important;">Backup &amp; Reset Aplikasi</p>
                 </div>
+
+                <div class="menu-card" onclick="pindahHalaman('pageKalkulator')" style="width: 100% !important; grid-column: span 1 !important; display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; justify-content: center !important;">
+                    <div class="menu-icon" style="margin: 0 auto 10px auto !important; display: flex !important; justify-content: center !important;">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="18"></line><circle cx="8" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="16" cy="12" r="1"></circle><circle cx="8" cy="16" r="1"></circle><circle cx="12" cy="16" r="1"></circle><circle cx="8" cy="20" r="1"></circle><circle cx="12" cy="20" r="1"></circle></svg>
+                    </div>
+                    <h4 style="margin: 0 !important; color: inherit !important;">Pusat Kalkulator</h4>
+                    <p style="margin: 4px 0 0 0 !important;">Dana Darurat &amp; Manual</p>
+                </div>
+
             </div>
         </div>
 
 
-        <!-- ════════ HALAMAN ALOKASI ════════ -->
         <div id="pageAlokasi" class="app-page hidden">
             <button class="btn-back" id="backToMenu2">← Kembali ke Menu</button>
 
@@ -193,7 +190,6 @@
         </div>
 
 
-        <!-- ════════ HALAMAN CELENGAN (MULTI TARGET & SETOR LANGSUNG) ════════ -->
         <div id="pageCelengan" class="app-page hidden">
             <button class="btn-back" id="backToMenu3">← Kembali ke Menu</button>
 
@@ -202,8 +198,6 @@
                 <p>Kumpulkan tabunganmu ke berbagai impian terpisah secara praktis.</p>
             </div>
             
-
-            <!-- Tampilan Ringkasan Saldo Tabungan yang Bisa Dipakai -->
             <div class="content-card" style="background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05)); border-color: rgba(16,185,129,0.2);">
                 <div style="font-size: 13px; color: var(--text-sub);">Sisa Saldo Kantong Tabungan Saat Ini:</div>
                 <h3 id="txtSaldoTabunganCelenganPage" style="color: var(--green); margin: 4px 0 0 0; font-size: 22px;">Rp 0</h3>
@@ -218,18 +212,39 @@
                 <button id="setTargetBtn" class="btn-primary" style="background:var(--grad-blue);box-shadow:0 4px 20px rgba(59,130,246,0.25);">Tambah Target Baru 🚀</button>
             </div>
 
-            <!-- Container Tempat Daftar Banyak Celengan Muncul -->
             <div id="daftarCelenganContainer"></div>
         </div>
 
 
-        <!-- ════════ HALAMAN TOOLS ════════ -->
         <div id="pageTools" class="app-page hidden">
             <button class="btn-back" id="backToMenu4">← Kembali ke Menu</button>
 
             <div class="page-title-section">
-                <h3>🛠️ Fitur &amp; Tools Pendukung</h3>
-                <p>Kalkulator finansial mandiri, manajemen data backup.</p>
+                <h3>🛠️ Manajemen Data &amp; Sistem</h3>
+                <p>Ekspor impor data cadangan untuk mengamankan saldo aplikasi Anda.</p>
+            </div>
+
+            <div class="content-card">
+                <div class="section-title">💾 Backup &amp; Pemulihan Data JSON</div>
+                <button id="exportBtn" class="btn-primary" style="background:var(--grad-purple);box-shadow:0 4px 20px rgba(167,139,250,0.25);margin-bottom:16px;">Ekspor Data Aplikasi (.json)</button>
+                <label class="dd-label">Impor Data Cadangan:</label>
+                <input type="file" id="importFile" accept=".json" style="font-size:12px;width:100%;color:var(--text-sub);">
+            </div>
+
+            <div class="content-card" style="border-color:rgba(239,68,68,0.18);">
+                <div class="section-title" style="color:#ef4444;">🚨 Zona Bahaya</div>
+                <p style="font-size:12px;color:var(--text-sub);margin:0 0 14px;">Menghapus permanen seluruh data pendapatan, riwayat pengeluaran, dan celengan dari perangkat ini.</p>
+                <button id="resetDataBtn" class="btn-primary" style="background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 4px 20px rgba(239,68,68,0.22);">Reset Seluruh Data Aplikasi</button>
+            </div>
+        </div>
+
+
+        <div id="pageKalkulator" class="app-page hidden">
+            <button class="btn-back" id="backToMenu5">← Kembali ke Menu</button>
+
+            <div class="page-title-section">
+                <h3>🧮 Pusat Kalkulator FinSim</h3>
+                <p>Hitung target proteksi darurat dan coretan belanja harian dalam satu tempat.</p>
             </div>
 
             <div class="content-card">
@@ -251,23 +266,39 @@
                 </div>
             </div>
 
-            <div class="content-card">
-                <div class="section-title">💾 Backup &amp; Pemulihan Data JSON</div>
-                <button id="exportBtn" class="btn-primary" style="background:var(--grad-purple);box-shadow:0 4px 20px rgba(167,139,250,0.25);margin-bottom:16px;">Ekspor Data Aplikasi (.json)</button>
-                <label class="dd-label">Impor Data Cadangan:</label>
-                <input type="file" id="importFile" accept=".json" style="font-size:12px;width:100%;color:var(--text-sub);">
-            </div>
-
-            <div class="content-card" style="border-color:rgba(239,68,68,0.18);">
-                <div class="section-title" style="color:#ef4444;">🚨 Zona Bahaya</div>
-                <p style="font-size:12px;color:var(--text-sub);margin:0 0 14px;">Menghapus permanen seluruh data pendapatan, riwayat pengeluaran, dan celengan dari perangkat ini.</p>
-                <button id="resetDataBtn" class="btn-primary" style="background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 4px 20px rgba(239,68,68,0.22);">Reset Seluruh Data Aplikasi</button>
+            <div class="content-card" style="box-sizing: border-box;">
+                <div class="section-title">📱 Kalkulator Gadget (Manual)</div>
+                
+                <input type="text" id="calc-screen" readonly style="width: 100%; height: 55px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-align: right; padding: 10px 15px; font-size: 22px; font-weight: 600; color: #1e293b; margin-bottom: 15px; box-sizing: border-box;">
+                
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                    <button onclick="clearCalc()" style="background: #ef4444; color: white; border: none; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">C</button>
+                    <button onclick="inputCalc('/')" style="background: #f1f5f9; color: #1e293b; border: none; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">÷</button>
+                    <button onclick="inputCalc('*')" style="background: #f1f5f9; color: #1e293b; border: none; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">×</button>
+                    <button onclick="inputCalc('-')" style="background: #f1f5f9; color: #1e293b; border: none; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">-</button>
+                    
+                    <button onclick="inputCalc('7')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">7</button>
+                    <button onclick="inputCalc('8')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">8</button>
+                    <button onclick="inputCalc('9')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">9</button>
+                    <button onclick="inputCalc('+')" style="background: #f1f5f9; color: #1e293b; border: none; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">+</button>
+                    
+                    <button onclick="inputCalc('4')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">4</button>
+                    <button onclick="inputCalc('5')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">5</button>
+                    <button onclick="inputCalc('6')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">6</button>
+                    <button onclick="calculateResult()" style="grid-row: span 2; background: #0f172a; color: white; border: none; padding: 15px; font-size: 18px; font-weight: 600; border-radius: 12px; cursor: pointer;">=</button>
+                    
+                    <button onclick="inputCalc('1')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">1</button>
+                    <button onclick="inputCalc('2')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">2</button>
+                    <button onclick="inputCalc('3')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">3</button>
+                    
+                    <button onclick="inputCalc('0')" style="grid-column: span 2; background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">0</button>
+                    <button onclick="inputCalc('.')" style="background: #f8fafc; color: #1e293b; border: 1px solid #f1f5f9; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer;">.</button>
+                </div>
             </div>
         </div>
 
     </div>
-    <div class="app-watermark">Made with by Andika</div>
-
+    <div class="app-watermark">Made with ❤️ by Andika</div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
